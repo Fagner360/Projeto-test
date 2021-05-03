@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Árvore Genealógica!</title>
+    
+    <style>
+      
+      body{
+        background-color:white;
+        
+      }
+      
+    
+      
+      img{
+        width:80px;
+        height:80px;
+        border-radius:100%;
+        border:2px solid #000
+        
+         
+       
+       }
+     
+      
+     .tree ul {
+    padding-top: 20px;
+    position: relative;
+    
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+      
+      
+      
+
+.tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
+    
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    
+}
+      
+      
+      
+
+/*We will use ::before and ::after to draw the connectors*/
+
+      
+.tree li::before, .tree li::after{
+    content: '';
+    position: absolute;
+    top: 0; right: 50%;
+    border-top: 1px solid black;
+    width: 50%; height: 20px;
+}
+      
+      
+      
+.tree li::after{
+    right: auto; left: 50%;
+    border-left: 1px solid black;
+}
+      
+      
+      
+
+/*We need to remove left-right connectors from elements without
+any siblings*/
+      
+.tree li:only-child::after, .tree li:only-child::before {
+    display: none;
+}
+      
+      
+
+/*Remove space from the top of single children*/
+      
+.tree li:only-child{
+  padding-top: 0;}
+      
+      
+
+/*Remove left connector from first child and
+right connector from last child*/
+      
+.tree li:first-child::before, .tree li:last-child::after{
+    border: 0 none;
+}
+      
+      
+      
+/*Adding back the vertical connector to the last nodes*/
+      
+.tree li:last-child::before{
+    border-right: 1px solid black;
+    border-radius:0 5px 0 0;
+    -webkit-border-radius:0 5px 0 0;
+    -moz-border-radius:0 5px 0 0;
+}
+      
+      
+      
+.tree li:first-child::after{
+    border-radius:5px 0 0 0;;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+      
+      
+      
+
+/*Time to add downward connectors from parents*/
+      
+.tree ul ul::before{
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    border-left: 1px solid black;
+    width: 0; height: 20px;
+}
+      
+      
+      
+
+.tree li a{
+    border: 2px solid black;
+    padding: 5px 7px;
+    text-decoration: none;
+    color: #ccc;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
+    
+    border-radius: 100%%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+      
+      
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+      
+.tree li a:hover, .tree li a:hover+ul li a {
+    background:#90EE90;
+    color: #000;
+    border: 1px solid #94a0b4;
+}
+      
+      
+/*Connector styles on hover*/
+      
+.tree li a:hover+ul li::after,
+.tree li a:hover+ul li::before,
+.tree li a:hover+ul::before,
+.tree li a:hover+ul ul::before{
+    border-color:  #94a0b4;
+}
+      
+      h1{
+        color:black;
+        text-align:center;
+        background:white;
+        border:1px solid black;
+        width:400px;
+        height:50px;
+        margin-left:30%;
+        border-radius:20px;
+       
+        
+        
+       
+       
+        
+      }
+      
+      footer{
+        text-align:center;
+        border:1px solid black;
+        background:lightBlue;
+        
+       
+        
+      }
+      
+      main{
+        align-items:center;
+        background:lightGray;
+        border:1px solid #000;
+        
+        
+      }
+      
+      p{
+        color:black;
+      }
+      
+       p{
+        text-align:center;
+      }
+      
+      h2{
+        text-align:center;
+      }
+      
+      section{
+        border:1px solid black;
+        display:inline-block;
+        padding-bottom:10px;
+        margin-left:92px;
+        
+        
+        
+       
+        
+       
+       
+        
+        
+
+        }
+      
+      #episodio-chaves-section{
+        background:lightBlue;
+         text-align:center;
+         width:410px;
+        margin-bottom:15px;
+        
+      }
+      
+      
+      #todo-mundo-odeia-o-chris-section{
+        background:lightBlue;
+        text-align:center;
+        width:410px;
+        margin-bottom:15px;
+        
+      }
+      
+     
+ 
+      iframe{
+        border-radius:8px;
+        border:1px solid lightBlue;
+        
+       
+
+
+
+
+      }
+       
+      
+     
+      
+    
+    </style>
+  </head>
+  <body>
+    <main>
+    
+    <header>
+      <h1>Árvore Genealógica!</h1>
+    </header>
+    
+    
+     <div class="tree">
+    <ul>
+        <li>
+            <a href="#"> <img src="https://extra.globo.com/incoming/24833387-c80-b58/w488h275-PROP/91155239_sxrio-de-janeiro-rj11-01-2021carlos-villagran-o-quico-de-'chaves'-lanca-pre-candidat.jpg" alt="carlos villagran">
+          </a>
+          <p>Carlos villagran</p>
+            <ul>
+                <li>
+                    <a href="#"> <img src="https://vejasp.abril.com.br/wp-content/uploads/2016/12/chiquinha.jpg?quality=70&strip=info&w=600" alt="chiquinha">
+                  </a>
+                  <p>Chiquinha</p>
+                    <ul>
+                        <li>
+                            <a href="#">  <img src="https://www.98fmcuritiba.com.br/wp-content/uploads/2018/08/09144508/Sem-t%C3%ADtulo16.png" alt="seu madruga">
+</a>
+               <p>Madruga</p>
+                          
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><img src="https://i.pinimg.com/originals/44/e0/e5/44e0e52634531a514aeea52d4f42e94b.jpg" alt="florinda">
+</a>
+                  <p>Florinda</p>
+                  
+                    <ul>
+                        <li>
+                            <a href="#"><img src="https://www.estrelando.com.br/uploads/2014/10/14/fto_ft1_172271.gallery.jpg" alt="girafales">
+   
+</a>
+                          <p>Girafales</p>
+                          
+                        </li>
+                        <li>
+                            <a href="#"> <img src="https://i.pinimg.com/originals/ab/fc/23/abfc23bee361406398ecd4f2f7d6d1c5.jpg" alt="barriga">
+</a>
+                          <p>Barriga</p>
+                          
+                            <ul>
+                                <li>
+                                    <a href="#"> <img src="https://img.r7.com/images/2017/09/08/2ddhcpad8t_2o1i3y8d3e_file?dimensions=460x305&&amp;&amp;&amp;&amp;&amp;&amp;&amp;resize=460x305&amp;crop=871x578+228+38&amp;&amp;&amp;&amp;&amp;&amp;&amp;resize=460x305&amp;crop=871x578+228+38" alt="clotildes">
+</a>
+                        <p>Clotildes</p>
+                                  
+                                </li>
+                                <li>
+                                    <a href="#"> <img src="https://aventurasnahistoria.uol.com.br/media/_versions/personagem/nhonho_capa_widexl.jpg" alt="ionho">
+</a>
+                                  <p>Ionho</p>
+                                    <ul>
+                                        <li><a href="#"> <img src="https://miro.medium.com/max/280/0*E2QBtZ-allM41uQJ." alt="paty">
+</a>
+                                          <p>Paty</p>
+</li>
+                                        <li><a href="#">  <img src="https://pbs.twimg.com/media/EfT5TrGWkAE83iU.png" alt="neves">
+ 
+</a>
+                                          <p>Neves</p>
+</li>
+                                        <li><a href="#"><img src="https://i2.wp.com/popoca.com.br/wp-content/uploads/2020/04/Jaiminho-1.jpg?fit=600%2C600&ssl=1" alt="jaiminho">
+                                          </a><p>Jaiminho</p></li>
+                                    </ul>                                      
+                                </li>
+                                <li>
+                                    <a href="#"><img src="https://cdn.mensagenscomamor.com/content/images/m000262239.jpg?v=0&w=350&h=250" alt="rochelle"></a>
+                                  <p>Rochelle</p>
+                                  
+                                    <ul>
+                                        <li><a href="#"><img src="https://noticiasdatv.uol.com.br/media/_versions/everybody-hates-chris-julius-dia-dos-pais_fixed_large.jpg" alt="julius"></a> <p>Julius</p>
+                                         
+                                          
+                                          </li>
+                                          
+                                          
+                                        <li><a href="#"><img src="https://www.gerarmemes.com.br/uploads/galeria/meme-523-todo-mundo-odeia-chris-gerador-de-memes.jpg" alt="chris"></a>
+                                  <p>Chris</p>
+                                        </li>
+                                        <li>
+                                            <a href="#"><img src="https://pbs.twimg.com/profile_images/1305625266/tequan-richmond2.jpg" alt="drew rock"></a> <p>Drew Rock</p>
+                                             
+                                            <ul>
+                                             
+                                                <li>
+                                                    <a href="#"><img src="https://static.wikia.nocookie.net/everybodyhateschris/images/5/52/Imani.jpg" alt="tonya rock"></a><p>Tonya Rock</p>
+                                                  
+                                                    <ul>
+                                                      
+                                                      
+                                                        <li><a href="#"><img src="https://tvhistoria.com.br/wp-content/uploads/2020/04/todomundochris-060719-malvo.jpg" alt="ricky harris"></a> <p>Ricky Harris</p></li>
+                                           
+                                                    </ul>
+                                                  
+                                                </li>
+                                             
+                                              
+                                                <li><a href="#"><img src="https://d3b4rd8qvu76va.cloudfront.net/385/458/152/710003031-1qer9gt-e7tb3mb4ci08a00/original/Golpebaixo1.jpg" alt="golpe baixo"></a><p>Golpe Baixo</p></li>
+                                             
+                                              
+                                            </ul>
+                                           
+                                        </li>
+                                       
+                                    </ul>
+                                 
+                                </li>
+                              
+                            </ul>
+                          
+                        </li>
+                      
+                    
+                        <li><a href="#"><img src="https://static.wikia.nocookie.net/everybodyhateschris/images/b/b4/Everybody-hates-chris-antonio-fargas68.jpg" alt="hates chris"></a><p>Hates chris</p></li>
+                     
+                      
+                    </ul>
+                 
+                </li>
+              
+            </ul>
+        
+        </li>
+      
+    </ul>
+</div>
+      
+      <section id="episodio-chaves-section" class="main-section">
+       <article>
+        <h2>Cháves</h2>
+        <p>Cháves completo para recordar:</p>
+        <iframe width="380" height="230" src="https://www.youtube.com/embed/Od02Xx2GPFA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p>
+       Quer saber mais da historia do Cháves acesse á Wikipedia...
+        <a id="chaves-link" href="https://pt.wikipedia.org/wiki/30_Anos_de_Chaves" target="_blank">Wikipedia entrar</a>
+      </p>
+        </article>
+      </section>
+      
+      <section id="todo-mundo-odeia-o-chris-section" class="main-section">
+        <article>
+          <h2>Todo Mundo Odeia o Chris</h2>
+          <p>Primeira temporada</p>
+          
+          
+          
+         <iframe width="380" height="230" src="https://www.youtube.com/embed/BNVoR7dxVFo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <p>
+                Quer saber mais da historia de todo mundo odeia o Chris acesse á Wikipedia...
+            <a id="todo-mundo-odeia-o-chris-link" href="https://pt.wikipedia.org/wiki/Everybody_Hates_Chris" target="_blank">Wikipedia entrar</a>
+          </p>
+        </article>
+      </section>
+      
+     
+        
+    </main>
+      
+ <footer>
+   <p>&copy; Fagner Almeida</p>
+    </footer>
+   
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
